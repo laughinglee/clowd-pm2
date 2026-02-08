@@ -4,7 +4,7 @@
 # 遇到错误立即退出
 set -e
 
-# 检查是否为 root 用户，决定是否使用 sudo
+# 检查是否为 root 用户, 决定是否使用 sudo
 if [ "$(id -u)" -eq 0 ]; then
     SUDO=""
 else
@@ -29,7 +29,7 @@ fi
 
 # 1. 检查 Node.js 环境
 if ! command -v node &> /dev/null; then
-    echo "[INFO] 未检测到 Node.js，正在安装 Node.js 22.x..."
+    echo "[INFO] 未检测到 Node.js, 正在安装 Node.js 22.x..."
     # 使用 NodeSource 安装源 (兼容 Debian 和 Ubuntu)
     curl -fsSL https://deb.nodesource.com/setup_22.x | $SUDO -E bash -
     $SUDO apt-get install -y nodejs
@@ -39,7 +39,7 @@ fi
 
 # 检查 npm
 if ! command -v npm &> /dev/null; then
-    echo "[ERROR] npm 未安装，请检查 Node.js 安装状态。"
+    echo "[ERROR] npm 未安装, 请检查 Node.js 安装状态。"
     exit 1
 fi
 
@@ -53,10 +53,10 @@ fi
 
 # 3. 安装依赖 (如果有 package.json)
 if [ -f "package.json" ]; then
-    echo "[INFO] 检测到 package.json，正在安装依赖..."
+    echo "[INFO] 检测到 package.json, 正在安装依赖..."
     npm install
 else
-    echo "[WARN] 未找到 package.json，跳过依赖安装。"
+    echo "[WARN] 未找到 package.json, 跳过依赖安装。"
 fi
 
 # 4. 配置日志轮转 (防止日志占满磁盘)
@@ -85,5 +85,5 @@ echo "  pm2 list        # 查看服务状态"
 echo "  pm2 logs        # 查看日志"
 echo "  pm2 monit       # 监控资源"
 echo ""
-echo "【重要】如需设置开机自启，请运行以下命令并按提示操作："
+echo "【重要】如需设置开机自启, 请运行以下命令并按提示操作："
 echo "  pm2 startup"
