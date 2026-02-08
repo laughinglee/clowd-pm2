@@ -61,8 +61,8 @@ if [ -f "package.json" ]; then
     fi
 
     # 设置 npm 镜像源加速
-    npm config set registry https://wc61weef.mirror.aliyuncs.com
-        npm install
+    # npm config set registry https://wc61weef.mirror.aliyuncs.com
+    npm install
 else
     echo "[WARN] 未找到 package.json, 跳过依赖安装。"
 fi
@@ -79,6 +79,12 @@ echo "[INFO] 正在启动应用..."
 if [ ! -f "ecosystem.config.js" ]; then
     echo "[ERROR] 找不到 ecosystem.config.js 配置文件！"
     exit 1
+fi
+
+# 加载 .env 环境变量 (如果存在)
+if [ -f ".env" ]; then
+    echo "[INFO] 加载 .env 环境变量..."
+    export $(grep -v '^#' .env | xargs)
 fi
 
 # 启动或重载

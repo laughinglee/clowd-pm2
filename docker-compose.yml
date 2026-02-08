@@ -15,6 +15,10 @@ services:
       - pm2-data:/app/.pm2
     env_file:
       - .env
+    environment:
+      # Explicitly mapping env vars if needed, though env_file handles it.
+      # Setting config path explicitly for Docker environment
+      - OPENCLAW_CONFIG_PATH=/app/config/openclaw.json
     restart: unless-stopped
 
 volumes:

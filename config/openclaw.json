@@ -1,0 +1,34 @@
+{
+  "gateway": {
+    "auth": {
+      // Use the token defined in .env
+      "token": "${OPENCLAW_GATEWAY_TOKEN}"
+    }
+  },
+  "models": {
+    "providers": {
+      // Define a custom provider using the env vars
+      "custom-provider": {
+        "baseUrl": "${LLM_BASE_URL}",
+        "apiKey": "${LLM_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "default-model",
+            "name": "Default Model",
+            "contextWindow": 16000,
+            "maxTokens": 4096
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      // Set the custom provider as default
+      "model": { 
+        "primary": "custom-provider/default-model" 
+      }
+    }
+  }
+}
