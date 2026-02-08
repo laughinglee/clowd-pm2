@@ -28,7 +28,7 @@ COPY start.sh /app/
 RUN chmod +x /app/start.sh
 
 # 暴露端口
-EXPOSE 8080 7860 9320 18789
+EXPOSE 8080 18789
 
 # 设置PM2环境
 ENV PM2_HOME=/app/.pm2

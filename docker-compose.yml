@@ -8,8 +8,6 @@ services:
     container_name: openclaw
     ports:
       - "8080:8080"
-      - "7860:7860"
-      - "9320:9320"
       - "18789:18789"
     volumes:
       - ./data:/app/data

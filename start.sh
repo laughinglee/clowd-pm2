@@ -53,8 +53,16 @@ fi
 
 # 3. 安装依赖 (如果有 package.json)
 if [ -f "package.json" ]; then
-    echo "[INFO] 检测到 package.json, 正在安装依赖..."
-    npm install
+    echo "[INFO] 检测到 package.json, 正在安装依赖..."    
+    # 安装构建工具 (防止某些包编译失败)
+    if ! dpkg -s build-essential &> /dev/null; then
+        echo "[INFO] 安装构建工具 (build-essential)..."
+        $SUDO apt-get update && $SUDO apt-get install -y build-essential
+    fi
+
+    # 设置 npm 镜像源加速
+    npm config set registry https://wc61weef.mirror.aliyuncs.com
+        npm install
 else
     echo "[WARN] 未找到 package.json, 跳过依赖安装。"
 fi
