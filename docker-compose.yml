@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  openclaw:
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    container_name: openclaw
+    ports:
+      - "8080:8080"
+      - "7860:7860"
+      - "9320:9320"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+      - pm2-data:/app/.pm2
+    env_file:
+      - .env
+    restart: unless-stopped
+
+volumes:
+  pm2-data:
