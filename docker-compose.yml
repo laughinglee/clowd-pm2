@@ -1,25 +1,62 @@
 version: '3.8'
 
+x-openclaw-defaults: &default-config
+  build:
+    context: .
+    dockerfile: .Dockerfile
+  volumes:
+    # Shared configuration (Models, Token usually same for cluster, or separate if needed)
+    - ./config:/app/config
+  env_file:
+    - .env
+  environment:
+    - OPENCLAW_CONFIG_PATH=/app/config/openclaw.json
+  restart: unless-stopped
+
 services:
-  openclaw:
-    build:
-      context: .
-      dockerfile: .Dockerfile
-    container_name: openclaw
+  # Instance 1: Default Ports (18789 / 8080)
+  openclaw-1:
+    <<: *default-config
+    container_name: openclaw-1
     ports:
-      - "8080:8080"
       - "18789:18789"
+      - "8080:8080"
     volumes:
-      - ./data:/app/data
       - ./config:/app/config
-      - pm2-data:/app/.pm2
-    env_file:
-      - .env
-    environment:
-      # Explicitly mapping env vars if needed, though env_file handles it.
-      # Setting config path explicitly for Docker environment
-      - OPENCLAW_CONFIG_PATH=/app/config/openclaw.json
-    restart: unless-stopped
+      # Persistent State for Instance 1
+      - ./data/instance1/state:/root/.openclaw
+      - ./data/instance1/data:/app/data
+      - pm2-data-1:/app/.pm2
+
+  # Instance 2: Mapped to 18790 / 8081
+  openclaw-2:
+    <<: *default-config
+    container_name: openclaw-2
+    ports:
+      - "18790:18789"
+      - "8081:8080"
+    volumes:
+      - ./config:/app/config
+      # Persistent State for Instance 2
+      - ./data/instance2/state:/root/.openclaw
+      - ./data/instance2/data:/app/data
+      - pm2-data-2:/app/.pm2
+
+  # Instance 3: Mapped to 18791 / 8082
+  openclaw-3:
+    <<: *default-config
+    container_name: openclaw-3
+    ports:
+      - "18791:18789"
+      - "8082:8080"
+    volumes:
+      - ./config:/app/config
+      # Persistent State for Instance 3
+      - ./data/instance3/state:/root/.openclaw
+      - ./data/instance3/data:/app/data
+      - pm2-data-3:/app/.pm2
 
 volumes:
-  pm2-data:
+  pm2-data-1:
+  pm2-data-2:
+  pm2-data-3:
