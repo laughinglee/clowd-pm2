@@ -22,6 +22,8 @@ services:
       - "18789:18789"
       - "8080:8080"
     volumes:
+      # Scripts/Code mount
+      - /container/openclaw-1/scripts:/app
       - ./config:/app/config
       # Persistent State for Instance 1
       - ./data/instance1/state:/root/.openclaw
@@ -36,6 +38,8 @@ services:
       - "18790:18789"
       - "8081:8080"
     volumes:
+      # Scripts/Code mount
+      - /container/openclaw-2/scripts:/app
       - ./config:/app/config
       # Persistent State for Instance 2
       - ./data/instance2/state:/root/.openclaw
@@ -50,6 +54,8 @@ services:
       - "18791:18789"
       - "8082:8080"
     volumes:
+      # Scripts/Code mount
+      - /container/openclaw-3/scripts:/app
       - ./config:/app/config
       # Persistent State for Instance 3
       - ./data/instance3/state:/root/.openclaw

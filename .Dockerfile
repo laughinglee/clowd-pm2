@@ -1,5 +1,5 @@
 # Dockerfile
-FROM alpine/openclaw:latest
+FROM openclaw:local
 
 # Switch to root to install system dependencies
 USER root
